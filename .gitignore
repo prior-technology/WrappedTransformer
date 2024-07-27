@@ -1,0 +1,6 @@
+/Manifest.toml
+**/.CondaPkg/*
+scratch/*.ipynb
+**/models/*
+/data/*
+SymbolicTransformer
