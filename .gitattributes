@@ -1,0 +1,4 @@
+notebooks/* linguist-documentation
+geometry/* linguist-documentation
+*.ipynb linguist-documentation
+data/* linguist-generated

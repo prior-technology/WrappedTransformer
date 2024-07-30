@@ -6,7 +6,7 @@ using Transformers.HuggingFace
 using SymbolicTransformer
 using LinearAlgebra
 import Base.show
-import SymbolicTransformer.center
+using VectorTransformer
 
 export PromptedTransformer,PromptedTransformerBlock, Residual, Prediction, prompt, embed, unembed, predict, dot, prompt_residuals, extract_blocks, expand, logit, probability, block_outputs
 
@@ -387,8 +387,8 @@ function extract_blocks(T::PromptedTransformer)
 end
 
 "implement center for Residual type"
-function center(r::Residual)
-    Residual(SymbolicTransformer.center(r.vector), :(center($(r.expression))), """ center($(r.label)) """)
+function VectorTransformer.center(r::Residual)
+    Residual(VectorTransformer.center(r.vector), :(center($(r.expression))), """ center($(r.label)) """)
 end
 
 norm_square(vector) = LinearAlgebra.norm(vector, 1)

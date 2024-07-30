@@ -3,7 +3,7 @@ using Test
 using Transformers
 using Transformers.HuggingFace
 using Transformers.TextEncoders
-using SymbolicTransformer.WrappedTransformer
+using WrappedTransformer
 using TextEncodeBase
 using LinearAlgebra
 

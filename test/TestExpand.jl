@@ -4,7 +4,7 @@ using Transformers
 using Transformers.Layers
 using Transformers.HuggingFace
 using Transformers.TextEncoders
-using SymbolicTransformer.WrappedTransformer
+using WrappedTransformer
 using TextEncodeBase
 using LinearAlgebra
 
