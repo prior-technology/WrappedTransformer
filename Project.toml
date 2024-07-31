@@ -1,18 +1,17 @@
 name = "WrappedTransformer"
 uuid = "6995ef1a-4771-4e27-83d4-89d6690bb6a6"
 authors = ["Stephen Prior <stephen@prior.technology> and contributors"]
-version = "0.1.0-DEV"
+version = "0.2.0-DEV"
 
 [deps]
+SymbolicTransformer = "9295511b-303f-4566-8a7e-0c11da6792f2"
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Memoization = "6fafb56a-5788-4b4e-91ca-c0cea6611c73"
 NNlib = "872c559c-99b0-510c-b3b7-b6c96a88d5cd"
-SymbolicTransformer = "9295511b-303f-4566-8a7e-0c11da6792f2"
 TextEncodeBase = "f92c20c0-9f2a-4705-8116-881385faba05"
 Transformers = "21ca0261-441d-5938-ace7-c90938fde4d4"
-VectorTransformer = "c8e6c799-df3e-4af8-b563-7df566ea393d"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

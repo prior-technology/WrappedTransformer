@@ -4,9 +4,10 @@ using Transformers.Layers
 using Transformers.TextEncoders
 using Transformers.HuggingFace
 using SymbolicTransformer
+using SymbolicTransformer.LayerNormalization
 using LinearAlgebra
 import Base.show
-using VectorTransformer
+
 
 export PromptedTransformer,PromptedTransformerBlock, Residual, Prediction, prompt, embed, unembed, predict, dot, prompt_residuals, extract_blocks, expand, logit, probability, block_outputs
 
@@ -387,17 +388,15 @@ function extract_blocks(T::PromptedTransformer)
 end
 
 "implement center for Residual type"
-function VectorTransformer.center(r::Residual)
-    Residual(VectorTransformer.center(r.vector), :(center($(r.expression))), """ center($(r.label)) """)
+function LayerNormalization.center(r::Residual)
+    Residual(LayerNormalization.center(r.vector), :(center($(r.expression))), """ center($(r.label)) """)
 end
 
 norm_square(vector) = LinearAlgebra.norm(vector, 1)
 norm_square(r::Residual) = LinearAlgebra.norm(r.vector, 1)
 
 "Apply for"
-function rewrite(x::Residual, ln::Transformers.LayerNorm, normedTerms)
-    
-    
+function rewrite(x::Residual, ln::Transformers.LayerNorm, normedTerms)       
     return (scale, seperateTerms)        
 end
 
