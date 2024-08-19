@@ -11,8 +11,9 @@ import Base.show
 
 export PromptedTransformer,PromptedTransformerBlock, Residual, Prediction, prompt, embed, unembed, predict, dot, prompt_residuals, extract_blocks, expand, logit, probability, block_outputs
 
+abstract type TransformerOperation end
 "Wraps a transformer and encoder with a prompt"
-struct PromptedTransformer <: SymbolicTransformer.Operation
+struct PromptedTransformer <: TransformerOperation
     "Huggingface pretrained model"
     model 
     "TextEncoder corresponding with model"
@@ -47,7 +48,7 @@ function show(io::IO, ::MIME"text/plain", T::PromptedTransformer)
     end
 end
 
-struct PromptedTransformerBlock <: SymbolicTransformer.Operation
+struct PromptedTransformerBlock <: TransformerOperation
     "One block of a Transformers.jl Huggingface transformer"
     block
     prompt_residuals
@@ -59,7 +60,7 @@ function show(io::IO, ::MIME"text/plain", T::PromptedTransformerBlock)
 end
 
 "Represents a vector in the transformer's residual space"
-struct Residual <:  SymbolicTransformer.Residual
+struct Residual
     "vector in the residual space"
     vector 
     "Expression showing the source of this residual"
@@ -264,7 +265,7 @@ function label(r:: Residual)
     return r.label
 end
 "applies the model to the token"
-function Base.:(*)(T::SymbolicTransformer.Operation, r:: Residual)
+function Base.:(*)(T::TransformerOperation, r:: Residual)
     #To transform a new token at the end of a batch of tokens, we would push! the index of the 
     #new token onto tokens.onehots, which applies a corresponding change to the tokens OneHotArray
 
@@ -274,7 +275,7 @@ function Base.:(*)(T::SymbolicTransformer.Operation, r:: Residual)
     #take the residual in the last position
     return Residual(y.hidden_state[:,end], :($(T.expression) * $(r.expression)), string(label(T), label(r)))
 end
-function Base.:(*)(Op::SymbolicTransformer.Operation, target_residuals :: AbstractVector{Residual})
+function Base.:(*)(Op::TransformerOperation, target_residuals :: AbstractVector{Residual})
 
     residuals = prompt_residuals(Op)
     hidden_state = append_hidden_state(residuals.hidden_state, target_residuals)
